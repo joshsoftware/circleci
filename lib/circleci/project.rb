@@ -130,6 +130,21 @@ module CircleCi
       CircleCi.http.get "/project/#{username}/#{project}/settings"
     end
 
+    ##
+    #
+    # Create a new checkout key
+    #
+    # @param username [String] - User or org name who owns project
+    # @param project  [String] - Name of project
+    # 
+    # @param params [Hash] Additional query params. (type should be passed in
+    # params which can be deploy-key or github-user-key)
+    # @return         [CircleCi::Response] - Response object
+
+    def self.add_checkout_key username, project, params
+      CircleCi.http.post "/project/#{username}/#{project}/checkout-key", params
+    end
+
   end
 
 end
