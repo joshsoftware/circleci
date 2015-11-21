@@ -276,4 +276,26 @@ describe CircleCi::Project do
 
   end
 
+  describe 'add_checkout_key' do
+
+    context 'successfully', vcr: { cassette_name: 'project/add_checkout_key/success', record: :none } do
+
+      let(:res) { CircleCi::Project.add_checkout_key 'Shwetakale', 'recipe_guru', { type: 'github-user-key' } }
+
+      it 'returns a response object' do
+        res.should be_an_instance_of(CircleCi::Response)
+        res.should be_success
+      end
+
+      it 'returns a response hash' do
+        res.body.should be_an_instance_of(Hash)
+        project = res.body
+        project.should have_key 'public_key'
+        project.should have_key 'type'
+        project.should have_key 'fingerprint'
+      end
+
+    end
+  end
+
 end
